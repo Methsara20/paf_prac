@@ -2,16 +2,15 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import toast from 'react-hot-toast'
+import JoinCreateChat from './components/JoinCreateChat'
 
 function App() {
 
 
   return (
-    <div className="container mt-5 text-center">
-      <h1 className="mb-4">Bootstrap Test</h1>
-      <button className="btn btn-primary px-4 py-2">
-        Click Me (Bootstrap Styled)
-      </button>
+    <div >
+     <JoinCreateChat/>
     </div>
   )
 }
