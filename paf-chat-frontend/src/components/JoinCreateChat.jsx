@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import chatIcon from "../assets/images.jpg";
+import toast from "react-hot-toast";
 
 const JoinCreateChat = () => {
+  const [detail, setDetail] = useState({
+    roomId: "",
+    userName: "",
+  });
+
+  function handleFormInputChange(event) {
+    setDetail({
+      ...detail,
+      [event.target.name]: event.target.value,
+    });
+  }
+
+  function validateForm() {
+    if (detail.roomId === "" || detail.userName === "") {
+      toast.error("Invalid Input !!");
+      return false;
+    }
+    return true;
+  }
+
+  function joinChat() {
+    if (validateForm()) {
+    }
+  }
+
+  async function createRoom() {
+    if (validateForm()) {
+      //create room
+      console.log(detail);
+
+    
+    }
+  }
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center bg-dark">
       <div
@@ -26,9 +60,12 @@ const JoinCreateChat = () => {
                 Your Name
               </label>
               <input
+                onChange={handleFormInputChange}
+                value={detail.userName}
                 type="text"
                 className="form-control"
                 id="name"
+                name="userName"
                 placeholder="Enter your name"
               />
             </div>
@@ -39,6 +76,9 @@ const JoinCreateChat = () => {
                 Room ID
               </label>
               <input
+                name="roomId"
+                onChange={handleFormInputChange}
+                value={detail.roomId}
                 type="text"
                 className="form-control"
                 id="roomId"
@@ -47,8 +87,13 @@ const JoinCreateChat = () => {
             </div>
 
             <div className="d-grid gap-3">
-              <button className="btn btn-primary btn-lg">Join Room</button>
-              <button className="btn btn-outline-secondary btn-lg">
+              <button onClick={joinChat} className="btn btn-primary btn-lg">
+                Join Room
+              </button>
+              <button
+                onClick={createRoom}
+                className="btn btn-outline-secondary btn-lg"
+              >
                 Create Room
               </button>
             </div>

@@ -4,30 +4,26 @@ import { MdSend, MdAttachFile } from "react-icons/md";
 
 const ChatPage = () => {
   const currentUser = "Methsara";
-  
 
   const [messages, setMessages] = useState([
     {
       content: "Hello kouhshdshdaihidj",
       sender: "Methsara",
-      
     },
     {
       content: "Hello",
       sender: "OtherUser",
-      
     },
     {
       content: "Hello",
       sender: "Methsara",
-      
+    },
+    {
+      content: "Hello",
+      sender: "Methsara",
     },
 
-    {
-        content: "bfuwfgaiwughawliughwilughwlhguawhergkjwj",
-        sender: "other",
-        
-      },
+   
   ]);
 
   const [input, setInput] = useState("");
@@ -43,14 +39,14 @@ const ChatPage = () => {
     const newMessage = {
       content: input,
       sender: currentUser,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
     // For demo purposes - in real app, send via WebSocket
-    setMessages(prev => [...prev, newMessage]);
+    setMessages((prev) => [...prev, newMessage]);
     setInput("");
     inputRef.current?.focus();
-    
+
     // Scroll to bottom after sending message
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
@@ -63,12 +59,14 @@ const ChatPage = () => {
       <header className="border-dark bg-secondary shadow-sm border py-3 d-flex justify-content-around align-items-center">
         <div>
           <h1 className="h4 font-weight-bold text-white">
-            Room: <span className="font-weight-normal text-light">Family Room</span>
+            Room:{" "}
+            <span className="font-weight-normal text-light">Family Room</span>
           </h1>
         </div>
         <div>
           <h1 className="h4 font-weight-bold text-white">
-            User: <span className="font-weight-normal text-light">{currentUser}</span>
+            User:{" "}
+            <span className="font-weight-normal text-light">{currentUser}</span>
           </h1>
         </div>
         <div>
@@ -85,8 +83,8 @@ const ChatPage = () => {
             <div
               key={index}
               className={`mb-3 p-3 rounded ${
-                message.sender === currentUser 
-                  ? "bg-primary ms-auto" 
+                message.sender === currentUser
+                  ? "bg-primary ms-auto"
                   : "bg-secondary me-auto"
               }`}
               style={{ maxWidth: "75%", width: "fit-content" }}
@@ -102,7 +100,6 @@ const ChatPage = () => {
                 <div className="border-start ps-2 d-flex flex-column">
                   <div className="d-flex justify-content-between align-items-baseline">
                     <p className="mb-1 fw-bold small">{message.sender}</p>
-                    
                   </div>
                   <p className="mb-0 text-break">{message.content}</p>
                 </div>
@@ -135,9 +132,9 @@ const ChatPage = () => {
             placeholder="Type Your Message Here....."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+            onKeyPress={(e) => e.key === "Enter" && sendMessage()}
           />
-          <button 
+          <button
             className="btn btn-success rounded-end-pill border-start-0 px-3"
             onClick={sendMessage}
             disabled={!input.trim()}
