@@ -29,7 +29,7 @@ public class ChatController {
 
     //for sending and receiving messages
 
-    @MessageMapping("/sendMessage/{roomID}")
+    @MessageMapping("/sendMessage/{roomId}")
     @SendTo("/topic/room/{roomId}")
     public Message sendMessage(
             @DestinationVariable String roomId,
@@ -48,7 +48,7 @@ public class ChatController {
         if (room != null) {
             room.getMessages().add(message);
             roomRepository.save(room);
-        }else {
+        } else {
             throw new RuntimeException("Room not found");
         }
 

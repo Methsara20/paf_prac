@@ -3,7 +3,7 @@ import { MdAttachFile, MdSend } from "react-icons/md";
 import { useChatContext } from "../context/ChatContext";
 import { useNavigate } from "react-router";
 import SockJS from "sockjs-client";
-import { Stomp } from "@stomp/stompjs";
+import { Client } from "@stomp/stompjs";
 import toast from "react-hot-toast";
 import { baseURL } from "../config/AxiosHelper";
 import { getMessagess } from "../services/RoomService";
@@ -22,7 +22,7 @@ const ChatPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (!connected) {
-      navigate("/");
+      navigate("/chat");
     }
   }, [connected, roomId, currentUser]);
 
@@ -56,9 +56,17 @@ const ChatPage = () => {
   useEffect(() => {
     const connectWebSocket = () => {
       const sock = new SockJS(`${baseURL}/chat`);
-      const client = Stomp.over(sock);
+      const client = new Client({
+        webSocketFactory: () => sock,
+        debug: function (str) {
+          console.log(str);
+        },
+        reconnectDelay: 5000,
+        heartbeatIncoming: 4000,
+        heartbeatOutgoing: 4000,
+      });
 
-      client.connect({}, () => {
+      client.onConnect = () => {
         setStompClient(client);
         toast.success("connected");
 
@@ -66,37 +74,52 @@ const ChatPage = () => {
           const newMessage = JSON.parse(message.body);
           setMessages((prev) => [...prev, newMessage]);
         });
-      });
+      };
+
+      client.onStompError = (frame) => {
+        console.error('Broker reported error: ' + frame.headers['message']);
+        console.error('Additional details: ' + frame.body);
+      };
+
+      client.activate();
     };
 
     if (connected) {
       connectWebSocket();
     }
-  }, [roomId]);
+
+    return () => {
+      if (stompClient && stompClient.connected) {
+        stompClient.deactivate();
+      }
+    };
+  }, [roomId, connected]);
 
   const sendMessage = async () => {
-    if (stompClient && connected && input.trim()) {
+    if (stompClient && stompClient.connected && input.trim()) {
       const message = {
         sender: currentUser,
         content: input,
         roomId: roomId,
       };
 
-      stompClient.send(
-        `/app/sendMessage/${roomId}`,
-        {},
-        JSON.stringify(message)
-      );
+      stompClient.publish({
+        destination: `/app/sendMessage/${roomId}`,
+        body: JSON.stringify(message)
+      });
+      
       setInput("");
     }
   };
 
   function handleLogout() {
-    stompClient.disconnect();
+    if (stompClient) {
+      stompClient.deactivate();
+    }
     setConnected(false);
     setRoomId("");
     setCurrentUser("");
-    navigate("/");
+    navigate("/chat");
   }
 
   return (
