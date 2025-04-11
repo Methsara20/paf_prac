@@ -1,6 +1,5 @@
 package com.paf.chat.playload;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,5 @@ public class MessageRequest {
     private String content;
     private String sender;
     private String roomId;
-
-
 
 }
