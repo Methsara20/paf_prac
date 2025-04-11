@@ -13,8 +13,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MessageRequest {
 
+    private String id;
     private String content;
     private String sender;
     private String roomId;
+    private String fileUrl;
+    private String fileType;
+    private String fileName;
+    private boolean isUpdate;
+    private boolean isDelete;
 
 }

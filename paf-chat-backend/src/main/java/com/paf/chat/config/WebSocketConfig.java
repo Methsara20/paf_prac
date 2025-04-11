@@ -1,6 +1,5 @@
 package com.paf.chat.config;
 
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -11,17 +10,12 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-
-
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-
-
+        // Enable a simple message broker
         config.enableSimpleBroker("/topic");
-        // /topic/messages
+        // Set the application destination prefix
         config.setApplicationDestinationPrefixes("/app");
-        // /app/chat
-        // server-side: @MessagingMapping("/chat)"
     }
 
     @Override
