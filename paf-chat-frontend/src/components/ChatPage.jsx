@@ -61,7 +61,7 @@ const ChatPage = () => {
         behavior: "smooth",
       });
     }
-  }, [messages]);
+  }, [messages]); 
 
   useEffect(() => {
     if (editingMessage && editInputRef.current) {
