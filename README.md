@@ -52,4 +52,4 @@ A social platform for sharing skills, tracking learning progress, and connecting
 ### Installation
 1. Clone the repository
    ```sh
-   git clone https://github.com/yourusername/skillshare-platform.git
+   git clone https://github.com/Methsara20/paf_prac.git
