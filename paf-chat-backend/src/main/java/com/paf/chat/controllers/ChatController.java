@@ -1,4 +1,4 @@
-package com.paf.chat.controllers;
+/*package com.paf.chat.controllers;
 
 import com.paf.chat.entities.Message;
 import com.paf.chat.entities.Room;
@@ -55,4 +55,4 @@ public class ChatController {
 
         return message;
     }
-}
+}*/
